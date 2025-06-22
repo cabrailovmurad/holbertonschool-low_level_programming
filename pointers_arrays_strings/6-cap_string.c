@@ -14,7 +14,7 @@ char *cap_string(char *str)
 
 	while (str[i])
 	{
-		// Проверка: начало строки или после разделителя
+		/* Check if it's the first character and is lowercase */
 		if (i == 0 && str[i] >= 'a' && str[i] <= 'z')
 		{
 			str[i] -= ('a' - 'A');
