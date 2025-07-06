@@ -1,69 +1,85 @@
-#include "dog.h"
 #include <stdlib.h>
+#include "dog.h"
 
 /**
- * *_strcpy - Copy the given string
- * @dest: Location to copy string to
- * @src: String to copy to given location
+ * _strlen - возвращает длину строки
+ * @s: строка
  *
- * Return: Pointer to dest
+ * Return: длина строки
+ */
+int _strlen(char *s)
+{
+	int i = 0;
+
+	while (s[i])
+		i++;
+	return (i);
+}
+
+/**
+ * _strcpy - копирует строку из src в dest
+ * @dest: куда копируем
+ * @src: откуда копируем
+ *
+ * Return: указатель на dest
  */
 char *_strcpy(char *dest, char *src)
 {
 	int i = 0;
 
-	while (*(src + i) != 0)
+	while (src[i])
 	{
-		*(dest + i) = *(src + i);
+		dest[i] = src[i];
 		i++;
 	}
-	*(dest + i) = '\0';
+	dest[i] = '\0';
+
 	return (dest);
 }
 
 /**
- * new_dog - Create a new dog struct
- * @name: Name of dog
- * @age: Age of dog
- * @owner: Owner of dog
+ * new_dog - создает нового пса
+ * @name: имя пса
+ * @age: возраст
+ * @owner: владелец
  *
- * Return: pointer to struct, NULL if fails
+ * Return: указатель на новый dog_t или NULL при ошибке
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *new_dog;
-	char *new_name;
-	char *new_owner;
-	int len;
+	dog_t *dog;
+	int len_name, len_owner;
 
-	new_dog = malloc(sizeof(dog_t));
-	if (new_dog == NULL)
+	dog = malloc(sizeof(dog_t));
+	if (dog == NULL)
 		return (NULL);
-	len = 0;
-	while (name[len] != '\0')
-		len++;
-	len++;
-	new_name = malloc(len * sizeof(*owner));
-	if (new_name == NULL)
+
+	if (name == NULL)
+		name = "";
+	if (owner == NULL)
+		owner = "";
+
+	len_name = _strlen(name);
+	len_owner = _strlen(owner);
+
+	dog->name = malloc(sizeof(char) * (len_name + 1));
+	if (dog->name == NULL)
 	{
-		free(new_dog);
+		free(dog);
 		return (NULL);
 	}
-	len = 0;
-	while (name[len] != '\0')
-		len++;
-	len++;
-	new_owner = malloc(len * sizeof(*name));
-	if (new_owner == NULL)
+
+	dog->owner = malloc(sizeof(char) * (len_owner + 1));
+	if (dog->owner == NULL)
 	{
-		free(new_name);
-		free(new_dog);
+		free(dog->name);
+		free(dog);
 		return (NULL);
 	}
-	_strcpy(new_name, name);
-	_strcpy(new_owner, owner);
-	new_dog->name = new_name;
-	new_dog->age = age;
-	new_dog->owner = new_owner;
-	return (new_dog);
+
+	_strcpy(dog->name, name);
+	_strcpy(dog->owner, owner);
+	dog->age = age;
+
+	return (dog);
 }
