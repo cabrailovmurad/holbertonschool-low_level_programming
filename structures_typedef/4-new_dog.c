@@ -1,43 +1,85 @@
 #include <stdlib.h>
-#include <string.h>
 #include "dog.h"
 
 /**
- * new_dog - creates a new dog_t
- * @name: name of the dog
- * @age: age of the dog
- * @owner: owner of the dog
+ * _strlen - возвращает длину строки
+ * @s: строка
  *
- * Return: pointer to the new dog_t, or NULL on failure
+ * Return: длина строки
+ */
+int _strlen(char *s)
+{
+	int i = 0;
+
+	while (s[i])
+		i++;
+	return (i);
+}
+
+/**
+ * _strcpy - копирует строку из src в dest
+ * @dest: куда копируем
+ * @src: откуда копируем
+ *
+ * Return: указатель на dest
+ */
+char *_strcpy(char *dest, char *src)
+{
+	int i = 0;
+
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+
+	return (dest);
+}
+
+/**
+ * new_dog - создает нового пса
+ * @name: имя пса
+ * @age: возраст
+ * @owner: владелец
+ *
+ * Return: указатель на новый dog_t или NULL при ошибке
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
 	dog_t *dog;
-	char *dog_name;
-	char *dog_owner;
+	int len_name, len_owner;
 
 	dog = malloc(sizeof(dog_t));
 	if (dog == NULL)
 		return (NULL);
 
-	dog_name = strdup(name);
-	if (dog_name == NULL)
+	if (name == NULL)
+		name = "";
+	if (owner == NULL)
+		owner = "";
+
+	len_name = _strlen(name);
+	len_owner = _strlen(owner);
+
+	dog->name = malloc(sizeof(char) * (len_name + 1));
+	if (dog->name == NULL)
 	{
 		free(dog);
 		return (NULL);
 	}
 
-	dog_owner = strdup(owner);
-	if (dog_owner == NULL)
+	dog->owner = malloc(sizeof(char) * (len_owner + 1));
+	if (dog->owner == NULL)
 	{
-		free(dog_name);
+		free(dog->name);
 		free(dog);
 		return (NULL);
 	}
 
-	dog->name = dog_name;
+	_strcpy(dog->name, name);
+	_strcpy(dog->owner, owner);
 	dog->age = age;
-	dog->owner = dog_owner;
 
 	return (dog);
 }
