@@ -2,22 +2,25 @@
 #include "hash_tables.h"
 
 /**
- * main - check hash_djb2 function
+ * main - test key_index function
  *
  * Return: Always 0
  */
 int main(void)
 {
-    unsigned long int hash;
     char *s;
+    unsigned long int hash_table_array_size;
 
-    s = "Holberton";
-    hash = hash_djb2((unsigned char *)s);
-    printf("Hash of \"%s\": %lu\n", s, hash);
+    hash_table_array_size = 1024;
 
-    s = "School!";
-    hash = hash_djb2((unsigned char *)s);
-    printf("Hash of \"%s\": %lu\n", s, hash);
+    s = "cisfun";
+    printf("%lu\n", key_index((unsigned char *)s, hash_table_array_size));
+
+    s = "Don't forget to tweet today";
+    printf("%lu\n", key_index((unsigned char *)s, hash_table_array_size));
+
+    s = "98";
+    printf("%lu\n", key_index((unsigned char *)s, hash_table_array_size));
 
     return (0);
 }
