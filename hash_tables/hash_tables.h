@@ -15,9 +15,9 @@
  */
 typedef struct hash_node_s
 {
-	char *key;
-	char *value;
-	struct hash_node_s *next;
+        char *key;
+        char *value;
+        struct hash_node_s *next;
 } hash_node_t;
 
 /**
@@ -30,8 +30,8 @@ typedef struct hash_node_s
  */
 typedef struct hash_table_s
 {
-	unsigned long int size;
-	hash_node_t **array;
+        unsigned long int size;
+        hash_node_t **array;
 } hash_table_t;
 
 /* Function prototypes */
@@ -39,16 +39,19 @@ typedef struct hash_table_s
 /* 0. Create a hash table */
 hash_table_t *hash_table_create(unsigned long int size);
 
-/* 1. Add or update an element in the hash table */
+/* 1. djb2 hash function */
+unsigned long int hash_djb2(const unsigned char *str);
+
+/* 2. Add or update an element in the hash table */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value);
 
-/* 2. Retrieve a value associated with a key */
+/* 3. Retrieve a value associated with a key */
 char *hash_table_get(const hash_table_t *ht, const char *key);
 
-/* 3. Print the hash table */
+/* 4. Print the hash table */
 void hash_table_print(const hash_table_t *ht);
 
-/* 4. Delete the hash table */
+/* 5. Delete the hash table */
 void hash_table_delete(hash_table_t *ht);
 
 #endif /* HASH_TABLES_H */
